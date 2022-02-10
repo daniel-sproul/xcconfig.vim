@@ -18,17 +18,15 @@ syntax match xcconfigNumber "\v<\v\d+[[:digit:]\.]+\d+>"
 highlight default link xcconfigNumber Number
 
 " Various special keywords that deserve custom highlighting
-syntax keyword xcconfigAttributes
-      \ @executable_path
-      \ @loader_path
-      \ @rpath
-      \ inherited
+syntax match xcconfigAttributes /@executable_path\>/
+syntax match xcconfigAttributes /@loader_path\>/
+syntax match xcconfigAttributes /@rpath\>/
+syntax keyword xcconfigAttributes inherited
 highlight default link xcconfigAttributes PreProc
 
 " Includes start with one of these identifiers, followed by a double quoted path
-syntax keyword xcconfigImports
-      \ #include
-      \ #include?
+syntax match xcconfigImports /#include\>/
+syntax match xcconfigImports /#include?/
 highlight default link xcconfigImports Include
 
 " Variable regions, this matches either $(FOO) or ${BAR} style variables on a
