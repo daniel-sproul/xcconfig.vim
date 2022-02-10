@@ -40,4 +40,11 @@ syntax region xcconfigString start=/"/ end=/"/ oneline
 syntax region xcconfigString start=/'/ end=/'/ oneline
 highlight default link xcconfigString String
 
+" Conditional variable assignment
+" These take the form:
+"   FOO[config=Debug] = Bar
+syntax region xcconfigConditionalExpr start=/\[/ end=/\]/ contains=xcconfigConditional oneline
+syntax keyword xcconfigConditional arch config sdk contained
+highlight default link xcconfigConditional Conditional
+
 let b:current_syntax = "xcconfig"
