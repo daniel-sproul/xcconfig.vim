@@ -24,9 +24,26 @@ highlight default link xcconfigImports Include
 
 " Variable dereference, this matches either $(FOO) or ${BAR} style variables on a
 " single line. They can contain special keywords (like 'inherited')
-syntax region xcconfigVariableDeref start=/$(/ end=/)/ contains=xcconfigVariable oneline
-syntax region xcconfigVariableDeref start=/${/ end=/}/ contains=xcconfigVariable oneline
+syntax region xcconfigVariableDeref start=/$(/ end=/)/ contains=xcconfigVariable,xcconfigMacroExpansionModifier oneline
+syntax region xcconfigVariableDeref start=/${/ end=/}/ contains=xcconfigVariable,xcconfigMacroExpansionModifier oneline
 highlight default link xcconfigVariableDeref Function
+
+" Macro expansion modifiers
+" (see: "Text macro format" in Xcode Help)
+" These take the form:
+"    $(FOO:modifier0,modifier1)
+" TOOD maybe adopt more consistent nomenclature here? ("macro expanion" vs. "variable dereference", etc.)
+syntax keyword xcconfigMacroExpansionModifier contained
+      \ bundleIdentifier
+      \ deletingLastPathComponent
+      \ deletingPathExtension
+      \ deletingTrailingDot
+      \ identifier
+      \ lastPathComponent
+      \ pathExtension
+      \ rfc1034Identifier
+      \ xml
+highlight default link xcconfigMacroExpansionModifier PreProc
 
 " Strings, anything wrapped in single or double quotes for one line
 syntax region xcconfigString start=/"/ end=/"/ oneline
