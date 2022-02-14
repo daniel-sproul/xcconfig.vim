@@ -80,7 +80,7 @@ syntax keyword xcconfigVariable inherited
 "   Paste into document
 "   Delete the few lines of dross at the top
 "   :%sort u
-"   :%s/^/\t\t\\ /
+"   :%s/^/      \\ /
 "
 syntax keyword xcconfigVariable
       \ ACTION
