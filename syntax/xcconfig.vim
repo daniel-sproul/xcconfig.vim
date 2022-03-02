@@ -22,10 +22,13 @@ syntax match xcconfigImports /#include\>/
 syntax match xcconfigImports /#include?/
 highlight default link xcconfigImports Include
 
-" Variable dereference, this matches either $(FOO) or ${BAR} style variables on a
+" Variable dereference; this matches either $(FOO) or ${BAR} style variables on a
 " single line. They can contain special keywords (like 'inherited')
-syntax region xcconfigVariableDeref start=/$(/ end=/)/ contains=xcconfigVariable,xcconfigMacroExpansionModifier oneline
-syntax region xcconfigVariableDeref start=/${/ end=/}/ contains=xcconfigVariable,xcconfigMacroExpansionModifier oneline
+" Variable derefs can be nested, typically to express variable substitution
+" (hence defining the region to contain itself)
+" see: https://pewpewthespells.com/blog/xcconfig_guide.html#VariableSubstitution
+syntax region xcconfigVariableDeref start=/$(/ end=/)/ contains=xcconfigVariable,xcconfigVariableDeref,xcconfigMacroExpansionModifier oneline
+syntax region xcconfigVariableDeref start=/${/ end=/}/ contains=xcconfigVariable,xcconfigVariableDeref,xcconfigMacroExpansionModifier oneline
 highlight default link xcconfigVariableDeref Function
 
 " Macro expansion modifiers
