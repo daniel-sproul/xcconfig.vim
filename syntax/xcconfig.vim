@@ -56,7 +56,7 @@ highlight default link xcconfigString String
 " Conditional variable assignment
 " These take the form:
 "   FOO[config=Debug] = Bar
-syntax region xcconfigConditionalExpr start=/\[/ end=/\]/ contains=xcconfigConditional oneline
+syntax region xcconfigConditionalExpr start=/\[/ end=/\]/ contains=xcconfigConditional,xcconfigConditionalValue oneline
 syntax keyword xcconfigConditional arch config sdk contained
 highlight default link xcconfigConditional Conditional
 
@@ -658,6 +658,18 @@ syntax keyword xcconfigVariable
       \ BUILD_DIR
       \ EFFECTIVE_PLATFORM_NAME
       \ PLATFORM_NAME
+
+" --- Allowed conditional values ---
+
+highlight default link xcconfigConditionalValue Constant
+
+" Allowed values for [sdk=]
+" (matches both wildcard and exact version variants)
+" This is a rather long pattern, but essentially boils down to:
+"   <word_start> <|-delimited sdk names> <MM.NN word_end OR wildcard>
+" (SDK names as determined by copy-pasting from Xcode when you specify an SDK condition)
+" TODO? could presumably take the matching of wildcard variants further, but as-is this should cover the common cases
+syntax match xcconfigConditionalValue contained /\<\(appletvos\|appletvsimulator\|driverkit\|iphoneos\|iphonesimulator\|macosx\|watchos\|watchsimulator\)\([0-9]\+\.[0-9]\+\>\|\*\)/
 
 " --- Allowed setting values ---
 " What follows are allowed values for certain build settings
